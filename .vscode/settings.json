@@ -1,0 +1,17 @@
+{
+  "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+  "files.associations": {
+    "*.html": "html",
+    "*.pl": "prolog",
+    "*.bdl": "bdl",
+    "*.shader": "glsl",
+    "iosfwd": "cpp",
+    "ostream": "cpp",
+    "*.tcc": "cpp",
+    "string": "cpp",
+    "istream": "cpp",
+    "typeinfo": "cpp",
+    "iostream": "cpp",
+    "cmath": "cpp"
+  }
+}
