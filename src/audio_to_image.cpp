@@ -31,8 +31,8 @@ int main(int argc, char** argv) {
   }
   char* input_file = argv[1];
   char* output_file = argv[2];
-  Wave* wave = Wave::read_from_file((char*)input_file);
-  BitMap image(wave->bitrate * wave->time, pow(2, wave->bitcount), -1);
+  Wave* wave = Wave::read_from_file(input_file);
+  BitMap image((uint32_t)(wave->bitrate * wave->time), (uint32_t)pow(2, wave->bitcount), -1);
   plot_frequencies(wave->frequencies(), wave->bitrate * wave->time, &image);
-  image.write_to_file((char*)output_file);
+  image.write_to_file(output_file);
 }

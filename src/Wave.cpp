@@ -4,11 +4,11 @@
 using namespace std;
 Wave::Wave(wave_t* inner_wave) {
   wave = inner_wave;
-  this->time = inner_wave->data_section_size * 8 / (inner_wave->sample_rate * inner_wave->bits_per_sample);
+  this->time = ((double)inner_wave->data_section_size * 8) / (inner_wave->sample_rate * inner_wave->bits_per_sample);
   this->bitrate = inner_wave->sample_rate;
   this->bitcount = inner_wave->bits_per_sample;
 }
-Wave::Wave(uint32_t bitrate, uint32_t bitcount, uint32_t time) {
+Wave::Wave(uint32_t bitrate, uint32_t bitcount, double time) {
   this->time = time;
   this->bitrate = bitrate;
   this->bitcount = bitcount;
@@ -20,11 +20,11 @@ Wave::Wave(uint32_t bitrate, uint32_t bitcount, uint32_t time) {
   wave->type_of_format = 1;
   wave->number_of_channels = 1;
   wave->sample_rate = bitrate;
-  wave->byte_rate = bitrate * bitcount * wave->number_of_channels  / 8;
-  wave->bits_per_sample_x_channels = bitrate * wave->number_of_channels  / 8;
+  wave->byte_rate = (bitrate * bitcount * wave->number_of_channels + 7) / 8;
+  wave->bits_per_sample_x_channels = (bitrate * wave->number_of_channels + 7) / 8;
   wave->bits_per_sample = bitcount;
   wave->chunk_header = 'a' << 24 | 't' << 16 | 'a' << 8 | 'd';
-  wave->data_section_size = time * bitrate * wave->number_of_channels  * bitcount / 8;
+  wave->data_section_size = (time * bitrate * wave->number_of_channels * bitcount + 7) / 8;
   wave->data = (uint8_t*)malloc(wave->data_section_size);
   wave->chunk_size = 36 + wave->data_section_size;
   memset(wave->data, 0, wave->data_section_size);
@@ -51,7 +51,7 @@ void Wave::point(uint32_t time, uint8_t pitch) {
   wave->data[time] = pitch;
 }
 
-uint8_t* Wave::frequencies(){
+uint8_t* Wave::frequencies() {
   return this->wave->data;
 }
 

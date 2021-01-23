@@ -31,11 +31,11 @@ class Wave {
   wave_t* wave;
 
  public:
-  uint32_t time;
+  double time;
   uint32_t bitrate;
   uint32_t bitcount;
   Wave(wave_t* inner_wave);
-  Wave(uint32_t bitrate, uint32_t bitcount, uint32_t time);
+  Wave(uint32_t bitrate, uint32_t bitcount, double time);
   ~Wave();
   void write_to_file(char* filename);
   void point(uint32_t time, uint8_t pitch);
